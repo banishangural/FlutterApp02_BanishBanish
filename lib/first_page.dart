@@ -17,14 +17,13 @@ class _MyFirstPageState extends State<MyFirstPage> {
   Widget build(BuildContext context) {
     Object onPressed1() {
       if (_enabled) {
-        print('onPressed1 returning address of anon func but NOT running it');
-        ifClicked = true;
         return () {
           setState(() {
+            ifClicked = true;
             count = count + 1;
             _msg1 = 'Clicked + $count';
           });
-          print('Anon func now running as button pressed');
+          print('Click me button pressed');
         };
       } else {
         setState(() {
@@ -39,10 +38,11 @@ class _MyFirstPageState extends State<MyFirstPage> {
       if (_enabled) {
         print('Reset Button is running');
         return () {
-          print('Anon func now running');
+          print('Reset Button pressed');
           setState(() {
             _msg1 = _msg2Ini;
             count = 0;
+            ifClicked = false;
           });
         };
       } else {
