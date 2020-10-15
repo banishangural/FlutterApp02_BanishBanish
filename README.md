@@ -1,4 +1,6 @@
-# lab_1
+# Flutte App 2
+
+Submitted by Banish Banish
 
 A new Flutter project.
 
