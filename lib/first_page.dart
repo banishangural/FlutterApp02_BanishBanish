@@ -9,16 +9,21 @@ class _MyFirstPageState extends State<MyFirstPage> {
   bool _enabled = false;
   String _msg1 = '';
   String _msg2 = ''; //message to be shown in button 2
+  final _msg2Ini = 'Click Me';
+  int count = 0;
+  bool ifClicked = false;
 
   @override
   Widget build(BuildContext context) {
     Object onPressed1() {
       if (_enabled) {
-        setState(() {
-          _msg1 = 'Enabled';
-        });
         print('onPressed1 returning address of anon func but NOT running it');
+        ifClicked = true;
         return () {
+          setState(() {
+            count = count + 1;
+            _msg1 = 'Clicked + $count';
+          });
           print('Anon func now running as button pressed');
         };
       } else {
@@ -32,12 +37,18 @@ class _MyFirstPageState extends State<MyFirstPage> {
 
     Object onPressed2() {
       if (_enabled) {
-        print(
-            'onPressed2 returning the result of running the anonymous function');
+        print('Reset Button is running');
         return () {
           print('Anon func now running');
-        }();
+          setState(() {
+            _msg1 = _msg2Ini;
+            count = 0;
+          });
+        };
       } else {
+        setState(() {
+          _msg2 = '';
+        });
         print('onPressed2 returning NULL');
         return null;
       }
@@ -63,10 +74,16 @@ class _MyFirstPageState extends State<MyFirstPage> {
                       _enabled = onChangedValue;
                       setState(() {
                         if (_enabled) {
-                          _msg1 = 'Enabled';
+                          if (ifClicked) {
+                            _msg1 = 'Clicked + $count';
+                          } else {
+                            _msg1 = _msg2Ini;
+                          }
+                          _msg2 = 'Reset';
                           print('_enabled is true');
                         } else {
                           _msg1 = '';
+                          _msg2 = '';
                           print('_enabled is false');
                         }
                       });
@@ -101,12 +118,12 @@ class _MyFirstPageState extends State<MyFirstPage> {
                               borderRadius: BorderRadius.circular(10)),
                           elevation: 8,
                           textColor: Colors.blue.shade100,
-                          color: Colors.blueAccent,
+                          color: Colors.blue,
                           highlightColor: Colors.yellow,
                           splashColor: Colors.green.shade300,
                           padding: EdgeInsets.all(20.0),
-                          onPressed: onPressed1(),
-                          child: Text(_msg1),
+                          onPressed: onPressed2(),
+                          child: Text(_msg2),
                         ),
                       )
                     ],
